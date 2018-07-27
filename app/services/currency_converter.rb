@@ -13,6 +13,8 @@ class CurrencyConverter
     save_history
   rescue StandardError => error
     @error = error.message
+
+    false
   end
 
   private
@@ -20,10 +22,10 @@ class CurrencyConverter
   def check_currencies
     currencies_list = Rate.available_currencies
     unless currencies_list.include?(@from)
-      raise StandardError.new("Currency 'from' is not supported.")
+      raise StandardError.new("Currency '#{@from}' is not supported.")
     end
     unless currencies_list.include?(@to)
-      raise StandardError.new("Currency 'to' is not supported.")
+      raise StandardError.new("Currency '#{@to}' is not supported.")
     end
   end
 
