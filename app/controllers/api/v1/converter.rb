@@ -1,6 +1,8 @@
 class API::V1::Converter < Grape::API
   helpers API::V1::Helpers::Converter
 
+  ERROR_CODE = 403
+
   resource :converters do
     desc 'Convert currencies.'
     params { use :exchange }
@@ -8,9 +10,9 @@ class API::V1::Converter < Grape::API
       converter_service = CurrencyConverter.new(params[:from], params[:to], params[:amount])
       converter_service.call
       
-      return {
+      error!({
         error: converter_service.error
-      } if converter_service.error
+      }, ERROR_CODE) if converter_service.error
 
       {
         currency: params[:to],
