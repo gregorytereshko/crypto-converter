@@ -1,0 +1,2 @@
+class ConvertionsnHistory < ApplicationRecord
+end
